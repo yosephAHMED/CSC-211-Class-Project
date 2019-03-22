@@ -7,7 +7,7 @@ enum input { ENTER, UP, DOWN, LEFT, RIGHT, BACK, NONE };
 bool EXIT_PROGRAM = false; // Exit conditions
 int MainMenu_OptionSelected = 1;
 bool on_MainMenu = true;
-input MainMenu_Input = NONE;
+input MainMenu_Input = NONE, LAST_MainMenu_Input = NONE;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); COORD coordinates; // Console variables
 /// Prototypes
 void MainMenuDraw(), MainMenuInput(), MainMenuLogic();
@@ -39,7 +39,7 @@ void MainMenuDraw() { // Draws screen
 	else
 		cout << "    ";
 	cout << endl;
-	cout << "\t\t\t\t3. Set Variables";
+	cout << "\t\t\t\t3. Set Variables (non functional)";
 	if (MainMenu_OptionSelected == 3)
 		cout << " <--";
 	else
@@ -50,20 +50,79 @@ void MainMenuDraw() { // Draws screen
 		cout << " <--";
 	else
 		cout << "    ";
-	cout << endl;
+	cout << "\n\n\n\n";
+	cout << "\t\t            ";
+	if (LAST_MainMenu_Input == UP)
+		SetConsoleTextAttribute(console, 242);
+	cout << "^";
+	cout << "        w                                                    " << endl;
+	SetConsoleTextAttribute(console, 240);
+	cout << "\t\tControls: ";
+	if (LAST_MainMenu_Input == LEFT)
+		SetConsoleTextAttribute(console, 242);
+	cout << "< ";
+	SetConsoleTextAttribute(console, 240);
+	if (LAST_MainMenu_Input == DOWN)
+		SetConsoleTextAttribute(console, 242);
+	cout << "v";
+	SetConsoleTextAttribute(console, 240);
+	cout << " ";
+	if (LAST_MainMenu_Input == RIGHT)
+		SetConsoleTextAttribute(console, 242);
+	cout << ">";
+	SetConsoleTextAttribute(console, 240);
+	cout << " or ";
+	if (LAST_MainMenu_Input == LEFT)
+		SetConsoleTextAttribute(console, 242);
+	cout << "a ";
+	SetConsoleTextAttribute(console, 240);
+	if (LAST_MainMenu_Input == DOWN)
+		SetConsoleTextAttribute(console, 242);
+	cout << "s";
+	SetConsoleTextAttribute(console, 240);
+	if (LAST_MainMenu_Input == RIGHT)
+		SetConsoleTextAttribute(console, 242);
+	cout << " d";
+	SetConsoleTextAttribute(console, 240);
+	cout << " to move\n\t\t";
+	if (LAST_MainMenu_Input == BACK)
+		SetConsoleTextAttribute(console, 242);
+	cout << "Backspace or Escape";
+	SetConsoleTextAttribute(console, 240);
+	cout << " to go back, and ";
+	if (LAST_MainMenu_Input == ENTER)
+		SetConsoleTextAttribute(console, 242);
+	cout << "Enter." << endl;
+	SetConsoleTextAttribute(console, 240);
 }
 void MainMenuInput() { // Gets inputs and sets related variables
+	if (MainMenu_Input != NONE)
+		LAST_MainMenu_Input = MainMenu_Input;
 	ResetInputVariables();
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 13: // ENTER
 			MainMenu_Input = ENTER;
 			break;
+		case 27: // ESC
+		case 8: // Backspace
+			MainMenu_Input = BACK;
+			break;
 		case 'w':
+		case 72: // UP ARROW
 			MainMenu_Input = UP;
 			break;
 		case 's':
+		case 80: // DOWN ARROW
 			MainMenu_Input = DOWN;
+			break;
+		case 'a':
+		case 75: // LEFT ARROW
+			MainMenu_Input = LEFT;
+			break;
+		case 'd':
+		case 77: // RIGHT ARROW
+			MainMenu_Input = RIGHT;
 			break;
 		}
 	}
