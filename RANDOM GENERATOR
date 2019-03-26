@@ -1,0 +1,65 @@
+/* GENERATES RANDOM VALUES FOR A, B, and C. EACH OBJECT OF THE CLASS (THERE ARE 3 SETS) HAS 4 LINES. SO THERE ARE 4 A, B, and C
+for EACH SET*/
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+
+class lineType {
+public:
+	void generateNumbers();
+private:
+	double a[4];
+	double b[4];
+	double c[4];
+};
+
+int main() {
+
+	srand(time(NULL));
+	lineType RandomSets[3];
+	for (int i = 0; i < 3; i++)
+	{
+		RandomSets[i].generateNumbers();
+	}
+
+	system("pause");
+	return 0;
+}
+
+
+void lineType::generateNumbers() {
+
+	for (int i = 0; i < 4; i++)
+	{
+		/*a[i] = rand() % 101 - 50.5; */
+		a[i] = ((float)rand()) / RAND_MAX * 100.0 - 50.0;
+		b[i] = ((float)rand()) / RAND_MAX * 100.0 - 50.0;
+		c[i] = ((float)rand()) / RAND_MAX * 100.0 - 50.0;
+	}
+
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	cout << a[i] << endl;
+	//}test To see values stored
+
+
+}
+
+//const int NumSets() {
+//
+//	int choice;
+//	cout << "How Many Sets of Random Lines Do You Want To Generate? Max is 5, Min is 4." << endl;
+//	cin >> choice;
+//	
+//	if (choice > 0 && choice < 6)
+//	{
+//		return choice;
+//	}
+//	else
+//	{
+//		cout << "Incorrect Input." << endl;
+//	}
+//}
